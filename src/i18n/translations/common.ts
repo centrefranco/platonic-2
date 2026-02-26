@@ -6,6 +6,7 @@ export const common: {
 	ja: UIDict;
 	"zh-cn": UIDict;
 	ar: UIDict;
+	fr: UIDict;
 } = {
 	en: {
 		"header.auth": "Sign In",
@@ -71,5 +72,18 @@ export const common: {
 		"language-selector.label": "اختر اللغة",
 		"back.to.top": "العودة إلى الأعلى",
 		hi: "مرحبا",
+	},
+	fr: {
+		"header.auth": "Se Connecter",
+		"header.account": "Compte",
+		by: "par",
+		share: "Partager",
+		close: "Fermer",
+		"copy.link": "Copier le lien",
+		"load.more": "CHARGER PLUS",
+		"select.language": "Sélectionner la Langue",
+		"language-selector.label": "Sélectionner la Langue",
+		"back.to.top": "Retour en haut",
+		hi: "Salut",
 	},
 };

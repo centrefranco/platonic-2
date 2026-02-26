@@ -6,6 +6,7 @@ export const index: {
 	ja: UIDict;
 	"zh-cn": UIDict;
 	ar: UIDict;
+	fr: UIDict;
 } = {
 	en: {
 		intro:
@@ -82,5 +83,23 @@ export const index: {
 		"getting.started.description": "يفترض المعرفة الأساسية بـ Astro.",
 		"getting.started.cta": "إذا كنت على ما يرام، دعنا نبدأ!",
 		"start.setup": "ابدأ الإعداد",
+	},
+	fr: {
+		intro:
+			"i18n Starter est un thème Astro simple pour créer des sites web multilingues. Il prend en charge la fonctionnalité i18n d'Astro v4.0.",
+		"url.description":
+			"Fondamentalement, seul le schéma d'URL de sous-répertoire est pris en charge. Il est géré par l'URL comme suit pour chaque langue. L'URL racine est redirigée vers la langue par défaut spécifiée.",
+		feature: "Fonctionnalité",
+		"feature.astro.i18n":
+			"prise en charge de la fonctionnalité i18n officielle d'Astro",
+		"feature.multilingual":
+			"Méthodes de gestion diverses pour les pages multilingues",
+		"feature.seo": "SEO convivial",
+		"feature.performance": "Performance Lighthouse 100/100",
+		"getting.started": "Commencer",
+		"getting.started.description":
+			"Suppose des connaissances de base en Astro.",
+		"getting.started.cta": "Si vous allez bien, commençons !",
+		"start.setup": "Démarrer la configuration",
 	},
 };

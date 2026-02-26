@@ -1,6 +1,7 @@
 local_backend: true
 
 logo_url: /favicon.svg
+locale: 'en'
 
 backend:
   name: github
@@ -15,13 +16,12 @@ slug:
   clean_accents: true
   sanitize_replacement: '-'
 
-
 media_folder: "src/assets/images" # Location where files will be stored in the repo
 public_folder: "src/assets/images" # The src attribute for uploaded media
 
 i18n:
   structure: 'multiple_folders'
-  locales: ['en', 'es', 'ar', 'ja', 'zh-cn']
+  locales: ['en']
   default_locale: 'en'
 
 

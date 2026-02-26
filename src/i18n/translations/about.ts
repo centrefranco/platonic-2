@@ -6,6 +6,7 @@ export const about: {
 	ja: UIDict;
 	"zh-cn": UIDict;
 	ar: UIDict;
+	fr: UIDict;
 } = {
 	en: {
 		title: "About Us",
@@ -96,5 +97,24 @@ export const about: {
 		"contact.title": "اتصل بنا",
 		"contact.description":
 			"هل لديك أسئلة أو اقتراحات؟ لا تتردد في التواصل معنا.",
+	},
+	fr: {
+		title: "À Propos de Nous",
+		intro:
+			"Bienvenue sur notre page À propos. En savoir plus sur notre projet et notre équipe.",
+		"project.title": "À Propos du Projet",
+		"project.description":
+			"Il s'agit d'un modèle de démarrage Astro CMS multilingue qui prend en charge les fonctionnalités i18n d'Astro v4.0. Il est conçu pour vous aider à construire des sites web multilingues rapidement et efficacement.",
+		"features.title": "Fonctionnalités Clés",
+		"features.i18n": "Support d'internationalisation intégré",
+		"features.performance": "Optimisé pour les performances",
+		"features.seo": "Structure optimisée pour le SEO",
+		"features.customizable": "Hautement personnalisable",
+		"team.title": "Notre Équipe",
+		"team.description":
+			"Nous sommes un groupe de développeurs passionnés par la création d'outils qui rendent le développement web plus facile et plus accessible.",
+		"contact.title": "Contactez-Nous",
+		"contact.description":
+			"Vous avez des questions ou des suggestions ? N'hésitez pas à nous contacter.",
 	},
 };

@@ -6,6 +6,7 @@ export const error: {
 	ja: UIDict;
 	"zh-cn": UIDict;
 	ar: UIDict;
+	fr: UIDict;
 } = {
 	en: {
 		"404.title": "Page Not Found",
@@ -40,5 +41,12 @@ export const error: {
 			"الصفحة التي تبحث عنها غير موجودة. يرجى العودة إلى الأعلى أو تجربة لغة أخرى.",
 		"404.top.page": "الصفحة الرئيسية",
 		"404.other.languages": "عرض بلغات أخرى",
+	},
+	fr: {
+		"404.title": "Page Non Trouvée",
+		"404.message":
+			"La page que vous recherchez n'a pas pu être trouvée. Veuillez retourner en haut ou essayer une autre langue.",
+		"404.top.page": "Page d'Accueil",
+		"404.other.languages": "Voir dans d'autres langues",
 	},
 };
