@@ -1,0 +1,3 @@
+[submodule "src/components/universal"]
+	path = src/components/universal
+	url = https://github.com/centrefranco/components-universal.git
