@@ -1,0 +1,64 @@
+trigger:
+  - master
+  - dev
+  - test
+  - demo
+
+pool:
+  vmImage: ubuntu-latest
+
+resources:
+  repositories:
+    - repository: self
+      type: git
+      ref: $(Build.SourceBranch)
+      endpoint: github.com_bgilbycforp # Your GitHub service connection
+
+steps:
+  - checkout: self
+    persistCredentials: true
+    submodules: true
+    fetchDepth: 0
+  - task: NodeTool@0
+    displayName: Use Node 22.x
+    inputs:
+      versionSpec: 22.x
+  - task: Npm@1
+    displayName: npm install
+    inputs:
+      verbose: false
+  - task: Npm@1
+    displayName: 'npm run build'
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: run build
+  - task: Bash@3
+    displayName: 'Generate .htpasswd'
+    inputs:
+      targetType: 'inline'
+      script: |
+        sudo apt-get update && sudo apt-get install -y apache2-utils
+        htpasswd -bc dist/.htpasswd user "lcf-PLATONIC"
+        chmod 644 dist/.htpasswd
+  - task: CopyFiles@2
+    displayName: 'Copy startup.sh to dist'
+    inputs:
+      SourceFolder: ./deploy
+      Contents: startup.sh
+      TargetFolder: dist
+  - task: CopyFiles@2
+    displayName: 'Copy branch-specific custom-nginx.conf to dist'
+    inputs:
+      SourceFolder: ./deploy/$(Build.SourceBranchName)
+      Contents: custom-nginx.conf
+      TargetFolder: dist
+  - task: ArchiveFiles@2
+    displayName: Archive dist # Updated name for clarity
+    inputs:
+      rootFolderOrFile: dist # Archive dist, not deploy
+      includeRootFolder: false
+  - task: PublishPipelineArtifact@1
+    displayName: Publish Pipeline Artifact
+    inputs:
+      path: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip

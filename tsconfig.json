@@ -1,14 +1,27 @@
 {
 	"extends": "astro/tsconfigs/strict",
-	"include": [".astro/types.d.ts", "**/*"],
+	"include": [".astro/types.d.ts", "**/*", "src/lib/**/*"],
 	"exclude": ["dist"],
 	"compilerOptions": {
 		"baseUrl": ".",
 		"strictNullChecks": true,
+		"allowJs": true, // required, and included with all Astro templates https://docs.astro.build/en/guides/content-collections/#typescript-configuration-for-collections
+		"jsx": "preserve",
 		"paths": {
 			"@/*": ["./src/*"],
-			"@i18n": ["./src/i18n/index.ts"],
-			"@components/*": ["./src/components/*"]
+			"@i18n": ["./src/lib/i18n"],
+			"@/i18n": ["./src/lib/i18n"],
+			"@assets/*": ["src/assets/*"],
+			"@images/*": ["src/images/*"],
+			"@components/*": ["src/components/*"],
+			"@composables/*": ["./src/composables/*"],
+			"@config/*": ["config/*"],
+			"@layouts/*": ["src/layouts/*"],
+			"@lib/*": ["./src/lib/*"],
+			"@scripts/*": ["scripts/*"],
+			"@styles/*": ["src/styles/*"],
+			"@settings/*": ["src/content/_settings/*"],
+			"@universal/*": ["src/components/universal/*"]
 		}
 	}
 }

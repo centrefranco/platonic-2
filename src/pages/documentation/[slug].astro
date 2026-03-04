@@ -1,0 +1,65 @@
+---
+import Layout from '@layouts/Layout.astro'
+import DocumentationSideNav from '@components/layout/DocumentationSideNav.vue'
+import HoverNavigation from '@components/layout/HoverNavigation.vue'
+import { render, getCollection } from 'astro:content'
+
+export async function getStaticPaths() {
+  const documentCollection = await getCollection('documents')
+
+  const documents = await Promise.all(
+    documentCollection.map(async (doc: any) => {
+      const { Content, headings } = await render(doc)
+      return {
+        ...doc,
+        Content,
+        headings,
+      }
+    })
+  )
+
+  return documents
+    .sort((a, b) => {
+      const orderA =
+        a.data && typeof a.data.order === 'number' ? a.data.order : 999
+      const orderB =
+        b.data && typeof b.data.order === 'number' ? b.data.order : 999
+
+      return orderA - orderB
+    })
+    .map((document) => ({
+      params: { slug: document.id },
+      props: { document, documents },
+    }))
+}
+
+const { document, documents } = Astro.props
+---
+
+<Layout title="Documentation" debug={{ document, documents }}>
+  <div class="flex min-h-full flex-col">
+    <div
+      class="mx-auto flex w-full max-w-[90rem] items-start gap-x-20 px-4 py-10 sm:px-6 lg:px-8"
+    >
+      <aside class="sticky top-8 hidden w-64 shrink-0 lg:block">
+        <DocumentationSideNav
+          client:only="vue"
+          documents={documents}
+          currentDocumentId={document.id}
+        />
+      </aside>
+
+      <main class="flex-1 md-block">
+        <document.Content />
+      </main>
+
+      <aside class="sticky top-8 hidden w-96 shrink-0 xl:block">
+        <HoverNavigation
+          client:only="vue"
+          documentId={document.id}
+          items={document?.headings ?? []}
+        />
+      </aside>
+    </div>
+  </div>
+</Layout>

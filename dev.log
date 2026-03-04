@@ -1,0 +1,21 @@
+
+> astro-i18n-cms-starter@3.0.0 dev /media/eric/external/www2/platonic-2_0
+> astro dev
+
+15:05:44 [types] Generated 0ms
+15:05:45 [content] Syncing content
+15:05:45 [content] Synced content
+
+ astro  v5.17.3 ready in 332 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+15:05:45 watching for file changes...
+㊙︎ Loaded translations: en: 44 keys, es: 44 keys, ja: 38 keys, zh-cn: 38 keys, ar: 38 keys, fr: 44 keys
+15:05:49 [200] / 13ms
+15:05:53 [404] /admin 4ms
+15:06:40 [404] /admin 3ms
+15:06:54 [404] /admin 3ms
+15:10:20 [404] /admin 3ms
+ ELIFECYCLE  Command failed.

@@ -1,53 +1,37 @@
-import {
-	type SchemaContext,
-	defineCollection,
-	reference,
-	z,
-} from "astro:content";
+import { defineCollection, z } from "astro:content";
+import { decapLoader } from "@lib/decap-loader";
 import { glob } from "astro/loaders";
 
-const blog = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/data/blog" }),
-	schema: ({ image }: SchemaContext) =>
-		z.object({
-			title: z.string(),
-			description: z.string(),
-			date: z.coerce.date(),
-			lastModified: z.coerce
-				.date()
-				.optional()
-				.default(() => new Date()),
-			cover: image().optional(),
-			author: reference("authors"),
-			tags: z.array(reference("tags")),
-			category: reference("categories"),
-			draft: z.boolean().optional().default(false),
-		}),
+const settings = defineCollection({
+	loader: decapLoader({ filePath: "src/content/_settings/general.yml" }),
 });
 
-const tags = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.md", base: "./src/data/tags" }),
-	schema: z.object({
-		title: z.string(),
-	}),
+const social = defineCollection({
+	loader: decapLoader({ filePath: "src/content/_settings/social.yml" }),
 });
 
-const categories = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.md", base: "./src/data/categories" }),
+const documents = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/documents" }),
 	schema: z.object({
-		title: z.string(),
+		title: z.string().optional(),
+		description: z.string().optional(),
 		order: z.number().optional(),
 	}),
 });
 
-const authors = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.json", base: "./src/data/authors" }),
-	schema: z.object({
-		name: z.string(),
-		email: z.string(),
-		avatar: z.string(),
-		bio: z.string(),
-	}),
+const items = defineCollection({
+	loader: decapLoader({ filePath: "src/content/resources/items.yml" }),
 });
 
-export const collections = { blog, tags, categories, authors };
+const filters = defineCollection({
+	loader: decapLoader({ filePath: "src/content/resources/filters.yml" }),
+});
+
+// Expose your defined collections to Astro with the `collections` export
+export const collections = {
+	documents,
+	items,
+	filters,
+	settings,
+	social,
+};

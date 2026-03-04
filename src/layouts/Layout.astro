@@ -1,0 +1,77 @@
+---
+import '@styles/tailwind.css'
+import { getDecapCollection } from '@lib/AstroDecap'
+import GoogleAnalytics from '@universal/shared/v1/meta/GoogleAnalytics.astro'
+import MarkerIo from '@universal/shared/v1/meta/MarkerIo.astro'
+import Meta from '@universal/shared/v1/meta/Meta.astro'
+import Publicize from '@universal/shared/v1/meta/Publicize.astro'
+import BackToTop from '@universal/mag/v1/layout/BackToTop.vue'
+import Footer from '@universal/shared/v1/layout/Footer.astro'
+import Debug from '@universal/shared/v1/development/Debug.vue'
+import NavBar from '../components/layout/NavBar.astro'
+
+const { title, previewImageUrl, debug } = Astro.props
+const settings = await getDecapCollection('settings')
+const social = await getDecapCollection('social')
+
+const isDebug =
+  import.meta.env.ENABLE_DEBUG_TOOL &&
+  import.meta.env.ENABLE_DEBUG_TOOL.toLowerCase() === 'true'
+const locale = Astro.currentLocale
+---
+
+<!doctype html>
+<html lang="fr-CA" class="h-full">
+  <head>
+    <Meta
+      title={`${settings?.title ?? ''} | ${title}`}
+      description={settings?.description ?? ''}
+      url={settings?.url ?? ''}
+      imageUrl={previewImageUrl ?? settings?.previewImage ?? ''}
+      faviconUrl={settings?.favicon ?? '/favicon.ico'}
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.cforp.io/cdn/commun/libs/fontawesome/latest/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.cforp.io/cdn/commun/libs/fontawesome/6.4.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <Publicize />
+    <GoogleAnalytics code={settings?.code} />
+    <MarkerIo />
+  </head>
+
+  <body lang="fr" aria-live="polite" class="h-full">
+    <NavBar />
+
+    <slot />
+
+    <BackToTop />
+    <Footer />
+    {
+      isDebug && (
+        <Debug
+          client:only="vue"
+          data={{
+            ...debug,
+            settings,
+            social,
+          }}
+        />
+      )
+    }
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>

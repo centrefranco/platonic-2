@@ -1,0 +1,6 @@
+{
+  "watch": ["src/content", "public/admin"],
+  "ext": "md,yaml,yml,astro",
+  "verbose": false,
+  "quiet": true
+}

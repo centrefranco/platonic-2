@@ -1,0 +1,10 @@
+---
+export interface Props {
+  text: string
+  tooltipText: string
+}
+
+const { text, tooltipText } = Astro.props
+---
+
+<span title={tooltipText}>{text}</span>

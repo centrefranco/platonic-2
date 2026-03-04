@@ -1,0 +1,33 @@
+---
+import { processText } from '@lib/AstroDecap'
+import type { ComponentData } from '@lib/AstroDecap';
+
+import ExternalLink from '@components/inline/ExternalLink.astro';
+import ModalTrigger from '@components/inline/ModalTrigger.astro';
+import Tooltip from '@components/inline/Tooltip.astro';
+
+export interface Props {
+  content: (string | ComponentData)[];
+}
+
+const { content } = Astro.props;
+const processedContent = processText(content);
+---
+
+{processedContent.map((item) => {
+  if (typeof item === 'string') {
+    return <Fragment set:html={item} />;
+  }
+
+  // If adding a component, update the regex and component data in @lib/AstroDecap/inlineComponentProcessor.ts
+  switch (item.type) {
+    case 'modal_trigger':
+      return <ModalTrigger text={item.text} modalId={item.props.modalId!} />;
+    case 'tooltip':
+      return <Tooltip text={item.text} tooltipText={item.props.tooltipText!} />;
+    case 'external_link':
+      return <ExternalLink text={item.text} url={item.props.url!} />;
+    default:
+      return <Fragment set:html={item.text} />;
+  }
+})}

@@ -1,82 +1,49 @@
 ---
-// Redirect to Top page for user's system locale
-// Basically, you don't need to edit this file.
-
-import { SITE_DESCRIPTION, SITE_TITLE, X_ACCOUNT } from "@/consts";
-import {
-	DEFAULT_LOCALE,
-	LOCALES,
-	type Lang,
-	getLocalePaths,
-	useTranslations,
-} from "@/i18n";
-
-const t = useTranslations(Astro.currentLocale as Lang);
-const langs = Object.keys(LOCALES);
-const baseUrl = import.meta.env.PROD ? Astro.site : "/";
-const defaultLocale = DEFAULT_LOCALE;
+import Layout from '@layouts/Layout.astro';
+import Readme from '/README.md';
+import { getDecapPage } from '@lib/AstroDecap';
+const page = await getDecapPage('home');
 ---
 
-<html lang={DEFAULT_LOCALE}>
-  <head>
-    <meta charset="UTF-8" />
-    <title>redirect...</title>
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="generator" content={Astro.generator} />
-    {
-      getLocalePaths(Astro.url).map((props) => (
-        <link
-          rel="alternate"
-          hreflang={LOCALES[props.lang].lang || props.lang}
-          href={Astro.site?.origin + props.path}
-        />
-      ))
-    }
+<Layout title="Platonic" debug={{ page }}>
+	<div class="bg-white relative px-6 pt-14 lg:px-8 !z-0">
+		<div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+			<div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+		</div>
+		<div class="mx-auto max-w-2xl pt-8 sm:pt-12 lg:pt-18 pb-0">
+			<div class="text-center">
+				<h1 class="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
+					{page.title}
+				</h1>
+				<p
+					set:html={page.content[0].text}
+					class="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8"
+				/>
 
-    <!-- icon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" sizes="192x192" href="/android-chrome.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="color-scheme" content="light dark" />
+				<div class="mt-10 flex items-center justify-center gap-x-6">
+					<a href="/documentation/getting-started" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started</a>
+					<a href="/admin" class="text-sm/6 font-semibold text-gray-900">Admin Panel (Decap) <span aria-hidden="true">→</span></a>
+				</div>
+			</div>
+		</div>
+		<div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
+			<div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+		</div>
+	</div>
 
-    <!-- OGP -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={t(SITE_TITLE)} />
-    <meta property="og:site_name" content={t(SITE_TITLE)} />
-    <meta property="og:description" content={t(SITE_DESCRIPTION)} />
-    <meta property="og:image" content={Astro.site + "ogp.png"} />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:locale" content={DEFAULT_LOCALE} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content={t(X_ACCOUNT)} />
+	<div class="bg-white py-18 sm:py-12">
+		<div class="mx-auto max-w-7xl px-6 lg:px-8">
+			<div class="mx-auto max-w-3xl">
+				<article class="md-block mx-auto">
+					<Readme />
+				</article>
+			</div>
+		</div>
+	</div>
+</Layout>
 
-    <noscript>
-      <meta
-        http-equiv="refresh"
-        content={`0;url=${baseUrl + DEFAULT_LOCALE}/`}
-      />
-    </noscript>
-
-    <script is:inline define:vars={{ langs, baseUrl, defaultLocale }}>
-      if (
-        localStorage.selectedLang &&
-        langs.includes(localStorage.selectedLang)
-      ) {
-        location.href = `${baseUrl + localStorage.selectedLang}/`;
-      } else {
-        const browserLang = navigator.language.toLowerCase();
-
-        if (langs.includes(browserLang)) {
-          location.href = `${baseUrl + browserLang}/`;
-        } else if (langs.includes(browserLang.split("-")[0])) {
-          location.href = `${baseUrl + browserLang.split("-")[0]}/`;
-        } else {
-          location.href = `${baseUrl + defaultLocale}/`;
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <h1>redirect...</h1>
-  </body>
-</html>
+<style is:global>
+a {
+	text-decoration: underline !important;
+}
+</style>

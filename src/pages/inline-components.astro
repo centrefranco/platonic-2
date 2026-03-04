@@ -1,0 +1,210 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { processText } from '@lib/AstroDecap/inlineComponentProcessor';
+import Modal from '@components/Modal.vue';
+
+// Examples of processed content, and not a required step
+// as it appears in the MD or YAML files
+const modalExamples = [
+	processText('Click #modal_trigger(here | welcome-modal) to open the welcome modal.'),
+	processText('You can also #modal_trigger(trigger a settings modal | settings-modal) from within your text.'),
+	processText('Multiple triggers work too: #modal_trigger(Help | help-modal) and #modal_trigger(About | about-modal).')
+];
+
+const tooltipExamples = [
+	processText('Hover over #tooltip(this text | This is a helpful tooltip that appears on hover) to see the tooltip.'),
+	processText('Technical terms like #tooltip(API | Application Programming Interface) can be explained with tooltips.'),
+	processText('You can provide #tooltip(additional context | Tooltips are great for providing extra information without cluttering the main content) anywhere in your content.')
+];
+
+const externalLinkExamples = [
+	processText('Visit #external_link(Google | https://google.com) to search for information.'),
+	processText('Check out the #external_link(Astro documentation | https://docs.astro.build) for more details.'),
+	processText('You can link to #external_link(GitHub | https://github.com), #external_link(Stack Overflow | https://stackoverflow.com), or any other external site.')
+];
+
+const combinedExample = processText('Welcome to our platform! #modal_trigger(Click here | onboarding-modal) to start the onboarding process, or visit our #external_link(documentation | https://docs.example.com) for detailed guides. If you need help with #tooltip(technical terms | We provide comprehensive explanations for all technical concepts), hover over them for quick explanations. You can also #modal_trigger(contact support | support-modal) if you need additional assistance.');
+---
+
+<Layout title="Inline Components Examples - Platonic">
+	<div class="bg-white relative px-6 pt-14 lg:px-8">
+		<div class="mx-auto max-w-4xl pt-8 sm:pt-12 lg:pt-18 pb-12">
+			<div class="text-center mb-12">
+				<h1 class="text-balance text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+					Inline Components Examples
+				</h1>
+				<p class="mt-6 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
+					Interactive examples demonstrating the usage of inline components in your content
+				</p>
+			</div>
+
+			<div class="space-y-12">
+				<section class="bg-gray-50 rounded-lg p-8">
+					<h2 class="text-2xl font-semibold text-gray-900 mb-4">
+						Modal Triggers
+					</h2>
+					<p class="text-gray-600 mb-6">
+						Create clickable elements that trigger modals using the syntax: <code class="bg-gray-200 px-2 py-1 rounded">#modal_trigger(text | modal_id)</code>
+					</p>
+
+					<div class="bg-white p-6 rounded border">
+						<h3 class="text-lg font-medium mb-4">Examples:</h3>
+						<div class="space-y-4">
+							{modalExamples.map(example => (
+								<div set:html={example}></div>
+							))}
+						</div>
+					</div>
+				</section>
+
+				<section class="bg-blue-50 rounded-lg p-8">
+					<h2 class="text-2xl font-semibold text-gray-900 mb-4">
+						Tooltips
+					</h2>
+					<p class="text-gray-600 mb-6">
+						Add hover tooltips to any text using the syntax: <code class="bg-gray-200 px-2 py-1 rounded">#tooltip(text | tooltip_text)</code>
+					</p>
+
+					<div class="bg-white p-6 rounded border">
+						<h3 class="text-lg font-medium mb-4">Examples:</h3>
+						<div class="space-y-4">
+							{tooltipExamples.map(example => (
+								<div set:html={example}></div>
+							))}
+						</div>
+					</div>
+				</section>
+
+				<section class="bg-green-50 rounded-lg p-8">
+					<h2 class="text-2xl font-semibold text-gray-900 mb-4">
+						External Links
+					</h2>
+					<p class="text-gray-600 mb-6">
+						Create external links that open in a new tab using the syntax: <code class="bg-gray-200 px-2 py-1 rounded">#external_link(text | url)</code>
+					</p>
+
+					<div class="bg-white p-6 rounded border">
+						<h3 class="text-lg font-medium mb-4">Examples:</h3>
+						<div class="space-y-4">
+							{externalLinkExamples.map(example => (
+								<div set:html={example}></div>
+							))}
+						</div>
+					</div>
+				</section>
+
+				<section class="bg-yellow-50 rounded-lg p-8">
+					<h2 class="text-2xl font-semibold text-gray-900 mb-4">Implementation Notes</h2>
+					<div class="prose prose-sm max-w-none">
+						<ul class="space-y-2 text-gray-600">
+							<li>Inline components are automatically processed when content is loaded through <code>getDecapCollection()</code> or <code>getDecapPage()</code></li>
+							<li>Individual component templates are stored in <code>/src/components/inline/</code></li>
+							<li>All external links automatically include <code>target="_blank"</code> and <code>rel="noopener noreferrer"</code> for security</li>
+							<li>Modal triggers require corresponding modal implementations to function properly</li>
+						</ul>
+					</div>
+				</section>
+			</div>
+
+			<div class="text-center mt-12">
+				<a href="/documentation/inline-components" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+					View Documentation
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal Components -->
+	<Modal
+		modalId="welcome-modal"
+		title="Welcome Modal"
+		content="Welcome to our platform! This modal was triggered using the inline component syntax."
+		client:load
+	/>
+
+	<Modal
+		modalId="settings-modal"
+		title="Settings Modal"
+		client:load
+	>
+		<div>
+			<p class="mb-4">This is a settings modal with custom content using slots.</p>
+			<div class="space-y-3">
+				<div class="flex items-center justify-between">
+					<label class="text-sm font-medium text-gray-700">Enable notifications</label>
+					<input type="checkbox" class="rounded border-gray-300">
+				</div>
+				<div class="flex items-center justify-between">
+					<label class="text-sm font-medium text-gray-700">Dark mode</label>
+					<input type="checkbox" class="rounded border-gray-300">
+				</div>
+			</div>
+		</div>
+	</Modal>
+
+	<Modal
+		modalId="help-modal"
+		title="Help & Support"
+		client:load
+	>
+		<div>
+			<p class="mb-4">Need help? Here are some resources:</p>
+			<ul class="space-y-2 text-sm text-gray-600">
+				<li>• Check our documentation for detailed guides</li>
+				<li>• Visit our FAQ section for common questions</li>
+				<li>• Contact support for personalized assistance</li>
+			</ul>
+		</div>
+	</Modal>
+
+	<Modal
+		modalId="about-modal"
+		title="About This Platform"
+		client:load
+	>
+		<div>
+			<p class="mb-4">This platform demonstrates the power of inline components with Vue modal integration.</p>
+			<p class="text-sm text-gray-600">Built with Astro, Vue, and the useModal composable for seamless modal management.</p>
+		</div>
+	</Modal>
+
+	<Modal
+		modalId="onboarding-modal"
+		title="Welcome to Onboarding"
+		client:load
+	>
+		<div>
+			<p class="mb-4">Let's get you started with our platform!</p>
+			<div class="space-y-3">
+				<div class="p-3 bg-blue-50 rounded-lg">
+					<h4 class="font-medium text-blue-900">Step 1: Explore</h4>
+					<p class="text-sm text-blue-700">Take a look around and familiarize yourself with the interface.</p>
+				</div>
+				<div class="p-3 bg-green-50 rounded-lg">
+					<h4 class="font-medium text-green-900">Step 2: Configure</h4>
+					<p class="text-sm text-green-700">Set up your preferences and customize your experience.</p>
+				</div>
+			</div>
+		</div>
+	</Modal>
+
+	<Modal
+		modalId="support-modal"
+		title="Contact Support"
+		client:load
+	>
+		<div>
+			<p class="mb-4">We're here to help! Choose how you'd like to get in touch:</p>
+			<div class="space-y-3">
+				<button class="w-full p-3 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+					<div class="font-medium">Live Chat</div>
+					<div class="text-sm text-gray-600">Get instant help from our support team</div>
+				</button>
+				<button class="w-full p-3 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+					<div class="font-medium">Email Support</div>
+					<div class="text-sm text-gray-600">Send us a detailed message</div>
+				</button>
+			</div>
+		</div>
+	</Modal>
+</Layout>

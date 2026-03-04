@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets'
+import xLogo from '@assets/social/x-logo.png'
+import instagramLogo from '@assets/social/instagram-logo.svg'
+import facebookLogo from '@assets/social/facebook-logo.png'
+
+const { href: currentURL } = Astro.url
+
+const socials = [
+  {
+    url: `https://x.com/intent/tweet?url=${currentURL}`,
+    imagePath: xLogo,
+    alt: 'Icon du site internet X',
+    aria: 'Partager cette page sur X',
+    class: 'bg-black rounded-xl p-2',
+  },
+  {
+    url: `https://www.facebook.com/sharer/sharer.php?u=${currentURL}`,
+    imagePath: facebookLogo,
+    alt: 'Icon de Facebook',
+    aria: 'Partager cette page sur Facebook',
+  },
+  {
+    url: 'https://www.instagram.com/',
+    imagePath: instagramLogo,
+    alt: "Icon d'Instagram",
+    aria: 'Lien vers page Instagram',
+  },
+]
+---
+
+<div class="flex flex-col justify-center gap-2">
+  <ul
+    class:list={[
+      'grid grid-cols-3 place-items-end gap-2 !list-none',
+      'lg:flex',
+    ]}
+  >
+    {
+      socials.map((social) => {
+        return (
+          <li>
+            <a
+              class="w-8"
+              aria-label={social.aria}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                class="w-8"
+                src={social.imagePath}
+                alt={social.alt}
+                width="40"
+                height="40"
+              />
+            </a>
+          </li>
+        )
+      })
+    }
+  </ul>
+</div>

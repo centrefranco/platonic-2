@@ -1,0 +1,10 @@
+---
+export interface Props {
+  text: string
+  modalId: string
+}
+
+const { text, modalId } = Astro.props
+---
+
+<span data-modal-trigger={modalId}>{text}</span>

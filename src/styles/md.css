@@ -1,0 +1,55 @@
+.md-block h1 {
+  @apply text-4xl font-bold tracking-tight text-gray-900 mb-8 mt-12;
+}
+
+.md-block h2 {
+  @apply text-3xl font-semibold text-gray-800 mb-6 mt-10;
+}
+
+.md-block h3 {
+  @apply text-2xl font-semibold text-gray-800 mb-4 mt-8;
+}
+
+.md-block h4 {
+  @apply text-xl font-semibold text-gray-700 mb-4 mt-6;
+}
+
+.md-block p {
+  @apply text-base text-gray-600 leading-7 mb-6;
+}
+
+.md-block pre {
+  @apply bg-gray-50 rounded-lg p-4 my-6 overflow-x-auto;
+}
+
+.md-block table {
+  @apply min-w-full divide-y divide-gray-300 my-8;
+}
+
+.md-block table thead {
+  @apply bg-gray-50;
+}
+
+.md-block table th {
+  @apply px-4 py-3 text-left text-sm font-semibold text-gray-900;
+}
+
+.md-block table td {
+  @apply px-4 py-3 text-sm text-gray-500 border-b border-gray-200;
+}
+
+.md-block ul {
+  @apply list-disc list-outside pl-5 my-6 space-y-2;
+}
+
+.md-block li {
+  @apply text-gray-600 leading-6;
+}
+
+.md-block ol {
+  @apply list-decimal list-outside pl-5 my-6 space-y-2;
+}
+
+.md-block a {
+  @apply text-blue-600 hover:text-blue-800 underline;
+}

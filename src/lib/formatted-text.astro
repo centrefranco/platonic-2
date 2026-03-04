@@ -1,0 +1,224 @@
+<script>
+  window.addEventListener('load', function() {
+    if (typeof React === 'undefined' || typeof h === 'undefined') {
+      console.error('React or h not available');
+      return;
+    }
+
+    // Formatted Text Widget for Decap CMS
+    // Uses React and h helpers
+
+    class FormattedTextControl extends React.Component {
+      constructor(props) {
+        super(props);
+        this.selectedRange = null;
+      }
+
+      handleInput = (e) => {
+        this.props.onChange(e.target.innerHTML)
+      }
+
+      handleFormat = (tag) => {
+        if (this.editor && this.selectedRange) {
+          if (this.editor.contains(this.selectedRange.commonAncestorContainer)) {
+            const cloned = this.selectedRange.cloneContents();
+            const wrapper = document.createElement('div');
+            wrapper.appendChild(cloned);
+            const selectedHtml = wrapper.innerHTML;
+            if (selectedHtml) {
+              const html = `<${tag}>${selectedHtml}</${tag}>`;
+              this.selectedRange.deleteContents();
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = html;
+              const fragment = document.createDocumentFragment();
+              while (tempDiv.firstChild) {
+                fragment.appendChild(tempDiv.firstChild);
+              }
+              this.selectedRange.insertNode(fragment);
+              this.props.onChange(this.editor.innerHTML);
+            }
+          }
+          this.selectedRange = null;
+        }
+      }
+
+      handleClear = () => {
+        console.log('handleClear called');
+        if (this.editor && this.selectedRange) {
+          console.log('selectedRange:', this.selectedRange);
+          if (this.editor.contains(this.selectedRange.commonAncestorContainer)) {
+            const selectedText = this.selectedRange.toString();
+            console.log('selectedText:', selectedText);
+            if (selectedText) {  // Only proceed if there's actual selected text
+              this.selectedRange.deleteContents();
+              this.selectedRange.insertNode(document.createTextNode(selectedText));
+              // Manually trigger onChange to update the value
+              this.props.onChange(this.editor.innerHTML);
+              console.log('Formatting cleared, new innerHTML:', this.editor.innerHTML);
+            } else {
+              console.log('No text selected');
+            }
+          } else {
+            console.log('Stored selection is not within the editor');
+          }
+          this.selectedRange = null;  // Clear after use
+        } else {
+          console.log('Editor or stored selection not found');
+        }
+      }
+
+      handleClearAll = () => {
+        if (this.editor) {
+          this.editor.innerHTML = this.editor.textContent;
+          this.props.onChange(this.editor.innerHTML);
+          console.log('All formatting cleared from entire editor');
+        }
+      }
+
+      handleMouseDown = () => {
+        const selection = window.getSelection();
+        if (selection && selection.rangeCount > 0) {
+          this.selectedRange = selection.getRangeAt(0);
+        }
+      }
+
+      handleBlur = (e) => {
+        this.props.onChange(e.target.innerHTML);
+      }
+
+      render() {
+        var value = this.props.value || ''
+
+        return h(
+          'div',
+          { className: 'formatted-text-widget' },
+          h(
+            'div',
+            { className: 'decap-toolbar', onMouseDown: this.handleMouseDown },
+            h(
+              'button',
+              {
+                type: 'button',
+                onClick: () => this.handleFormat('strong'),
+                style: {
+                  marginRight: '5px',
+                  padding: '2px 6px',
+                  fontWeight: 'bold',
+                },
+                title: 'Bold',
+              },
+              'B'
+            ),
+            h(
+              'button',
+              {
+                type: 'button',
+                onClick: () => this.handleFormat('em'),
+                style: {
+                  marginRight: '5px',
+                  padding: '2px 6px',
+                  fontStyle: 'italic',
+                  fontFamily: 'mono, Arial, sans-serif',
+                },
+                title: 'Italic',
+              },
+              'I'
+            ),
+            h(
+              'button',
+              {
+                type: 'button',
+                onClick: () => this.handleFormat('sup'),
+                style: { marginRight: '5px', padding: '2px 6px' },
+                title: 'Superscript',
+              },
+              'A²'
+            ),
+            h(
+              'button',
+              {
+                type: 'button',
+                onClick: () => this.handleFormat('sub'),
+                style: { marginRight: '5px', padding: '2px 6px' },
+                title: 'Subscript',
+              },
+              'A₂'
+            ),
+            h(
+              'button',
+              {
+                type: 'button',
+                onClick: this.handleClear,
+                onMouseDown: this.handleMouseDown,
+                style: { marginRight: '5px', padding: '2px 6px' },
+                title: 'Clear formatting for selected text',
+              },
+              'Clear'
+            ),
+            h(
+              'button',
+              {
+                type: 'button',
+                onClick: this.handleClearAll,
+                style: { marginRight: '5px', padding: '2px 6px' },
+                title: 'Clear all formatting from the entire text field',
+              },
+              'Clear All'
+            )
+          ),
+          h('div', {
+            contentEditable: true,
+            ref: (el) => {
+              this.editor = el
+            },
+            onBlur: this.handleBlur,
+            dangerouslySetInnerHTML: { __html: value },
+            style: {
+              width: '100%',
+              minHeight: '100px',
+              border: '1px solid #ccc',
+              padding: '4px',
+              outline: 'none'
+            },
+          })
+        )
+      }
+    }
+
+    class FormattedTextPreview extends React.Component {
+      render() {
+        var value = this.props.value || ''
+        return h('div', {
+          style: { border: '1px solid #ccc', padding: '8px', margin: '4px 0' },
+          dangerouslySetInnerHTML: { __html: value },
+        })
+      }
+    }
+
+    // Register the widget on CMS ready
+    function registerWidget() {
+      if (typeof CMS !== 'undefined') {
+        CMS.registerWidget(
+          'formatted-text',
+          FormattedTextControl,
+          FormattedTextPreview
+        )
+        console.log('Formatted text widget registered successfully')
+      }
+    }
+
+    if (typeof CMS !== 'undefined') {
+      // Try immediate registration
+      registerWidget()
+      // Also register on ready event
+      CMS.registerEventHandler('ready', registerWidget)
+    } else {
+      // Fallback: wait for window load
+      window.addEventListener('load', function () {
+        if (typeof CMS !== 'undefined') {
+          CMS.registerEventHandler('ready', registerWidget)
+        }
+      })
+    }
+  });
+</script>

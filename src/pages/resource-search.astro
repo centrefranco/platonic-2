@@ -1,0 +1,13 @@
+---
+import Layout from '@layouts/Layout.astro'
+import type { Item, Filter } from '@composables/useSearch'
+import Search from '@components/Search.vue'
+import { getDecapCollection } from '@lib/AstroDecap'
+
+const filters = await getDecapCollection('filters')
+const items = await getDecapCollection('items')
+---
+
+<Layout title="Resource Search" debug={{ items, filters }}>
+  <Search client:only="vue" items={items} filters={filters} />
+</Layout>

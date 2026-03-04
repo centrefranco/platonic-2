@@ -1,0 +1,27 @@
+title: Platonic
+content:
+  - type: textBlock
+    text: "Idealized Astro with DeCap project with pipelines instituting
+      #external_link(LCF | https://www.lecentrefranco.ca/) best practices"
+  - type: imageBlock
+    image: /assets/kyoto-1.jpg
+    alt: Golden Temple
+    attribution: John Clark 2010
+  - type: formattedTextBlock
+    formattedText: We <em>approach</em> work <strong>as a <sub>place</sub></strong>
+      to make <strong>the <sup>world</sup> better</strong>
+  - type: richTextBlock
+    richText: |-
+      # Platonic
+
+      Astro / Decap Platform using Idealized Best Practices
+
+      ## CMS Link
+
+      [Link to CMS Backend](http://localhost:4321/admin)
+
+      ## Dev Branches
+
+      * Dev
+      * Test
+      * Demo

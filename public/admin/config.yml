@@ -1,13 +1,23 @@
-local_backend: true
+local_backend: true # Set to true if you want to use the local backend for local development
 
-logo_url: /favicon.svg
-locale: 'en'
+# For local development run:
+# npm run preview
+# and in a separate terminal run:
+# npx netlify-cms-proxy-server
+
+# More instructions in README.md
+
+site_url: https://cforp-platonic-lwapp-test.azurewebsites.net # URL of your site without trailing slash
+display_url: https://cforp-platonic-lwapp-test.azurewebsites.net # URL of your site for og:image without trailing slash
 
 backend:
-  name: github
-  repo: yacosta738/astro-cms
-  branch: main
-  base_url: https://sveltia-cms-auth.yunielacosta738.workers.dev/
+  name: github # Use github for deployment using github auth
+  repo: centrefranco/platonic # Path to your GitHub repository
+  branch: test # Branch to update (optional; defaults to master)
+  base_url: https://cforp-decap-oauth.onrender.com # Path to ext auth provider # *** New sites must be whitelisted in auth app CORS origin. ***
+
+media_folder: "src/assets/images" # Location where files will be stored in the repo
+public_folder: "src/assets/images" # The src attribute for uploaded media
 
 publish_mode: editorial_workflow
 
@@ -16,140 +26,313 @@ slug:
   clean_accents: true
   sanitize_replacement: '-'
 
-media_folder: "src/assets/images" # Location where files will be stored in the repo
-public_folder: "src/assets/images" # The src attribute for uploaded media
-
-i18n:
-  structure: 'multiple_folders'
-  locales: ['en']
-  default_locale: 'en'
-
-
 collections:
-  - name: 'posts'
-    label: 'Posts'
-    label_singular: 'Post'
-    folder: 'src/data/blog'
-    create: true
-    path: '{{year}}/{{month}}/{{day}}/{{slug}}'
-    extension: mdx
-    i18n: true
-    fields:
-      - name: 'title'
-        widget: 'string'
-        label: 'Title'
-        i18n: true
-      - name: 'description'
-        widget: 'string'
-        label: 'Description'
-        i18n: true
-      - name: 'date'
-        widget: 'datetime'
-        label: 'Publish Date'
-        i18n: 'duplicate'
-      - name: 'lastModified'
-        widget: 'datetime'
-        label: 'Last Modified'
-        required: false
-        default: "{{now}}"
-        i18n: 'duplicate'
-      - name: 'author'
-        widget: 'relation'
-        collection: 'authors'
-        value_field: '{{locale}}/{{slug}}'
-        search_fields: ['name']
-        display_fields: ['name']
-        multiple: false
-        i18n: 'duplicate'
-      - name: 'cover'
-        widget: 'image'
-        label: 'Cover'
-        i18n: 'duplicate'
-        default: 'src/assets/images/blog-placeholder-1.avif'
-      - name: 'tags'
-        widget: 'relation'
-        collection: 'tags'
-        value_field: '{{locale}}/{{slug}}'
-        search_fields: ['title']
-        display_fields: ['title']
-        multiple: true
-        i18n: 'duplicate'
-      - name: 'category'
-        widget: 'relation'
-        collection: 'categories'
-        value_field: '{{locale}}/{{slug}}'
-        search_fields: ['title']
-        display_fields: ['title']
-        multiple: false
-        i18n: 'duplicate'
-      - name: 'draft'
-        widget: 'boolean'
-        label: 'Draft'
-        default: true
-        i18n: 'duplicate'
-      - name: 'body'
-        widget: 'markdown'
-        label: 'Body'
-        i18n: true
+  - name: 'settings'
+    label: 'Settings'
+    label_singular: 'Setting'
+    files:
+      - label: 'Meta Information & General Settings'
+        name: 'site'
+        file: 'src/content/_settings/general.yml'
+        fields:
+          - {
+              label: 'Site Title',
+              name: 'title',
+              widget: 'string',
+              i18n: true,
+              required: false,
+            }
+          - {
+              label: 'Site Description',
+              name: 'description',
+              widget: 'text',
+              i18n: true,
+              required: false,
+            }
+          - {
+              label: 'Site URL (Production)',
+              name: 'url',
+              widget: 'string',
+              i18n: true,
+              required: false,
+            }
+          - {
+              label: 'Site Image (1200px × 630px)',
+              name: 'previewImage',
+              widget: 'image',
+              i18n: true,
+              required: false,
+            }
+          - {
+              label: 'Favicon (filename must start with favicon)',
+              name: 'favicon',
+              widget: 'image',
+              i18n: true,
+              required: false,
+            }
+          - {
+              label: 'Google Analytics Code',
+              name: 'gaCode',
+              widget: 'string',
+              i18n: true,
+              required: false,
+            }
+      - label: 'Social Settings'
+        name: 'social'
+        file: 'src/content/_settings/social.yml'
+        fields:
+          - {
+              label: 'Facebook URL',
+              name: 'facebook',
+              widget: 'string',
+              i18n: true,
+              required: false,
+            }
+          - {
+              label: 'X URL',
+              name: 'x',
+              widget: 'string',
+              i18n: true,
+              required: false,
+            }
+          - {
+              label: 'Instagram URL',
+              name: 'instagram',
+              widget: 'string',
+              i18n: true,
+              required: false,
+            }
+          - {
+              label: 'Linkedin',
+              name: 'linkedin',
+              widget: 'string',
+              i18n: true,
+              required: false,
+            }
 
-  - name: categories
-    label: Categories
-    label_singular: Category
-    folder: src/data/categories
-    slug: '{{title}}'
-    create: true
-    i18n: true
-    fields:
-      - name: title
-        widget: string
-        label: Title
-        i18n: true
-      - name: order
-        widget: number
-        label: Order
-        required: false
-        value_type: int
-        min: -1000
-        max: 1000
-        step: 1
-        default: 0
-        i18n: 'duplicate'
+  - label: 'Pages'
+    label_singular: 'Page'
+    name: 'pages'
+    files:
+      - label: 'Home Page'
+        name: 'home'
+        file: 'src/content/pages/home.yml'
+        fields:
+          - label: 'Title'
+            name: 'title'
+            required: false
+            widget: 'text'
+          - label: 'Content'
+            name: 'content'
+            required: false
+            widget: 'list'
+            types:
+              # Text
+              - label: 'Text'
+                name: 'textBlock'
+                widget: 'object'
+                summary: '{{fields.text}}' # Preview text in /admin
+                fields:
+                  - label: 'Text'
+                    name: 'text'
+                    widget: 'text'
+                    required: false
 
-  - name: tags
-    label: Tags
-    label_singular: Tag
-    folder: src/data/tags
-    slug: '{{title}}'
-    create: true
-    i18n: true
-    fields:
-      - name: title
-        widget: string
-        label: Title
-        i18n: true
+              # Formatted Text
+              - label: 'Formatted Text'
+                name: 'formattedTextBlock'
+                widget: 'object'
+                summary: '{{fields.formattedText}}'
+                fields:
+                  - label: 'Formatted Text'
+                    name: 'formattedText'
+                    widget: 'formatted-text'
+                    required: false
 
-  - name: 'authors'
-    label: 'Authors'
-    label_singular: 'Author'
-    folder: src/data/authors
-    slug: '{{name}}'
+              # Rich Text
+              - label: 'Rich Text'
+                name: 'richTextBlock'
+                widget: 'object'
+                summary: '{{fields.text}}' # Preview text in /admin
+                fields:
+                  - label: 'Rich Text'
+                    name: 'richText'
+                    widget: 'markdown'
+                    required: false
+
+              # Image
+              - label: 'Image'
+                name: 'imageBlock'
+                widget: 'object'
+                summary: '{{fields.alt}}' # Preview text in /admin
+                fields:
+                  - label: 'Image'
+                    name: 'image'
+                    widget: 'image'
+                    media_library:
+                      config:
+                        multiple: false
+                  - label: 'Alt Text'
+                    name: 'alt'
+                    widget: 'string'
+                    required: false
+                  - label: 'Attribution'
+                    name: 'attribution'
+                    widget: 'text'
+                    required: false
+
+      - label: 'About Page'
+        name: 'about'
+        # Configure i18n to true at file level required for file collection.
+        file: 'src/content/pages/about.yml'
+        fields:
+          - label: 'Title'
+            name: 'title'
+            required: false
+            widget: 'text'
+          - label: 'Content'
+            name: 'content'
+            required: false
+            widget: 'list'
+            types:
+              # Text
+              - label: 'Text'
+                name: 'textBlock'
+                widget: 'object'
+                summary: '{{fields.text}}'
+                fields:
+                  - label: 'Text'
+                    name: 'text'
+                    widget: 'text'
+                    required: false
+
+              # Formatted Text
+              - label: 'Formatted Text'
+                name: 'formattedTextBlock'
+                widget: 'object'
+                summary: '{{fields.formattedText}}'
+                fields:
+                  - label: 'Formatted Text'
+                    name: 'formattedText'
+                    widget: 'formatted-text'
+                    required: false
+
+              # Rich Text
+              - label: 'Rich Text'
+                name: 'richTextBlock'
+                widget: 'object'
+                summary: '{{fields.text}}' # Preview text in /admin
+                fields:
+                  - label: 'Rich Text'
+                    name: 'richText'
+                    widget: 'markdown'
+                    required: false
+
+              # Image
+              - label: 'Image'
+                name: 'imageBlock'
+                widget: 'object'
+                summary: '{{fields.alt}}'
+                fields:
+                  - label: 'Image'
+                    name: 'image'
+                    widget: 'image'
+                    media_library:
+                      config:
+                        multiple: false
+                  - label: 'Alt Text'
+                    name: 'alt'
+                    widget: 'string'
+                    required: false
+                  - label: 'Attribution'
+                    name: 'attribution'
+                    widget: 'text'
+                    required: false
+
+  - label: 'Resources'
+    name: 'resources'
+    files:
+      - label: 'Items'
+        name: 'items'
+        file: 'src/content/resources/items.yml'
+        create: true
+        fields:
+          - label: Items
+            name: items
+            widget: list
+            fields:
+              - { label: 'Value', name: 'value', widget: 'string' }
+              - { label: 'Description', name: 'description', widget: 'formatted-text' }
+              - { label: 'ID', name: 'id', widget: 'string' }
+              - {
+                  label: 'Code',
+                  name: 'code',
+                  widget: 'select',
+                  options:
+                    [
+                      { label: 'Science', value: 'sci' },
+                      { label: 'Economics', value: 'eco' },
+                      { label: 'Grammar', value: 'gra' },
+                    ],
+                }
+              - {
+                  label: 'Color',
+                  name: 'color',
+                  widget: 'color',
+                  allow_input: true,
+                }
+              - {
+                  label: 'Size',
+                  name: 'size',
+                  widget: 'select',
+                  options:
+                    [
+                      { label: 'XS', value: 'xs' },
+                      { label: 'S', value: 's' },
+                      { label: 'M', value: 'm' },
+                      { label: 'L', value: 'l' },
+                      { label: 'XL', value: 'xl' },
+                      { label: '2XL', value: '2xl' },
+                    ],
+                }
+              - { label: 'Href', name: 'href', widget: 'string' }
+              - { label: 'Price', name: 'price', widget: 'string' }
+              - { label: 'Image Source', name: 'imageSrc', widget: 'string' }
+              - { label: 'Image Alt', name: 'imageAlt', widget: 'string' }
+
+      - label: 'Filters'
+        name: 'filters'
+        file: 'src/content/resources/filters.yml'
+        create: true
+        fields:
+          - label: Filters
+            name: filters
+            widget: list
+            fields:
+              - { label: 'ID', name: 'id', widget: 'string' }
+              - { label: 'Name', name: 'name', widget: 'string' }
+              - {
+                  label: 'Options',
+                  name: 'options',
+                  widget: list,
+                  fields:
+                    [
+                      { label: 'Value', name: 'value', widget: 'string' },
+                      { label: 'Label', name: 'label', widget: 'string' },
+                      {
+                        label: 'Is Selected',
+                        name: 'isSelected',
+                        widget: 'boolean',
+                      },
+                    ],
+                }
+
+  - name: 'documents'
+    label: 'Documents'
+    folder: 'src/content/documents'
     create: true
-    extension: json
-    i18n: true
     fields:
-      - name: 'name'
-        widget: 'string'
-        label: 'Name'
-        i18n: 'duplicate'
-      - name: 'email'
-        widget: 'string'
-        label: 'Email'
-        i18n: 'duplicate'
-      - name: 'avatar'
-        widget: 'image'
-        label: 'Avatar'
-        i18n: 'duplicate'
-      - name: 'bio'
-        widget: 'markdown'
-        label: 'Bio'
-        i18n: true
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Description', name: 'description', widget: 'formatted-text' }
+      - { label: 'Page Ordering', name: 'order', widget: 'string' }
+      - { label: 'Body', name: 'body', widget: 'markdown' }

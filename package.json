@@ -26,7 +26,15 @@
 		"@astrojs/mdx": "^4.2.6",
 		"@astrojs/rss": "^4.0.11",
 		"@astrojs/sitemap": "^3.4.0",
-		"astro": "^5.7.12"
+		"@astrojs/vue": "^5.1.4",
+		"@headlessui/vue": "^1.7.23",
+		"@heroicons/vue": "^2.2.0",
+		"@tailwindcss/vite": "^4.2.1",
+		"@vueuse/core": "^14.2.1",
+		"astro": "^5.7.12",
+		"tailwindcss": "^4.2.1",
+		"vue": "^3.5.29",
+		"vue-json-component-vue-3": "^1.7.6"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
