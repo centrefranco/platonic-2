@@ -1,0 +1,22 @@
+id: color
+name: Color
+options:
+  - value: white
+    label: White
+    isSelected: false
+  - value: beige
+    label: Beige
+    isSelected: false
+  - value: blue
+    label: Blue
+    isSelected: false
+  - value: brown
+    label: Brown
+    isSelected: false
+  - value: green
+    label: Green
+    isSelected: false
+  - value: purple
+    label: Purple
+    isSelected: false
+slug: color

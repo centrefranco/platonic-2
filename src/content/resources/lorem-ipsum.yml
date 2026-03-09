@@ -1,0 +1,16 @@
+size: xs
+color: white
+price: $49
+imageSrc: >-
+  https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-05-related-product-01.jpg
+href: '#'
+code: sci
+imageAlt: >-
+  Payment application dashboard screenshot with transaction table, financial
+  highlights, and main clients on colorful purple background.
+name: Lorem Ipsum
+id: 2b6e6c8e-4e1a-4c2a-9b3a-1e2f3d4c5b6a
+description: >-
+  Lorem ips<strong>u</strong>m <strong>cogito</strong> <em>ergo sum</em> tu
+  <em>ne</em> cede malis <sup>gratia</sup> plena
+slug: lorem-ipsum

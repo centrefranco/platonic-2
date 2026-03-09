@@ -1,4 +1,4 @@
-# Platonic 1.1.2
+# Platonic 2.0.0
 
 **Astro / Decap Platform using Idealized Best Practices**
 

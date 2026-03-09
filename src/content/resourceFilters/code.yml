@@ -1,0 +1,13 @@
+id: code
+name: Code
+options:
+  - value: sci
+    label: Science
+    isSelected: false
+  - value: eco
+    label: Economics
+    isSelected: false
+  - value: gra
+    label: Grammar
+    isSelected: false
+slug: code

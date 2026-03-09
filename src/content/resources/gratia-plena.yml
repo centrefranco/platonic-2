@@ -1,0 +1,17 @@
+size: m
+color: blue
+price: $49
+imageSrc: >-
+  https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-05-related-product-01.jpg
+href: '#'
+code: gra
+imageAlt: >-
+  Payment application dashboard screenshot with transaction table, financial
+  highlights, and main clients on colorful purple background.
+name: Gratia Plena
+id: 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+description: >-
+  Lorem ips<strong>u</strong>m&nbsp;<strong>cogito</strong>&nbsp;<em>ergo
+  sum</em>&nbsp;tu&nbsp;<em>ne</em>&nbsp;cede
+  malis&nbsp;<sup>gratia</sup>&nbsp;plena
+slug: gratia-plena

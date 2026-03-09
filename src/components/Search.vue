@@ -21,7 +21,7 @@
 
                 <!-- Filters -->
                 <form class="mt-4">
-                  <Disclosure as="div" v-for="section in filters" :key="section.name" class="border-t border-gray-200 pt-4 pb-4" v-slot="{ open }">
+                  <Disclosure as="div" v-for="section in resourceFilters" :key="section.name" class="border-t border-gray-200 pt-4 pb-4" v-slot="{ open }">
                     <fieldset>
                       <legend class="w-full px-2">
                         <DisclosureButton class="flex w-full items-center justify-between p-2 text-gray-400 hover:text-gray-500">
@@ -85,9 +85,9 @@
               <PlusIcon class="ml-1 size-5 shrink-0 text-gray-400" aria-hidden="true" />
             </button>
 
-            <div class="hidden lg:block">
-              <form class="divide-y divide-gray-200">
-                <div v-for="section in filters" :key="section.name" class="py-10 first:pt-0 last:pb-0">
+              <div class="hidden lg:block">
+                <form class="divide-y divide-gray-200">
+                  <div v-for="section in resourceFilters" :key="section.name" class="py-10 first:pt-0 last:pb-0">
                   <fieldset>
                     <legend class="block text-sm font-medium text-gray-900">{{ section.name }}</legend>
                     <div class="space-y-3 pt-6">
@@ -129,24 +129,24 @@
               leave-from-class="opacity-100 scale-100"
               leave-to-class="opacity-0 scale-90"
             >
-              <div v-for="product in filteredItems" :key="product.id" class="group relative">
+              <div v-for="resource in filteredResources" :key="resource.id" class="group relative">
                 <div class="relative">
-                  <img :src="product.imageSrc" :alt="product.imageAlt" class="aspect-4/3 w-full rounded-lg bg-gray-100 object-cover" />
+                  <img :src="resource.imageSrc" :alt="resource.imageAlt" class="aspect-4/3 w-full rounded-lg bg-gray-100 object-cover" />
                   <div class="absolute inset-0 flex flex-col items-end p-4 bg-gray-200 opacity-0 group-hover:opacity-90" aria-hidden="true">
-                    <div class="my-2 text-center" v-html="product.description" />
-                    <div class="w-full rounded-md bg-white/75 px-4 py-2 text-center text-sm font-medium text-gray-900 backdrop-blur-sm backdrop-filter">View Product</div>
+                    <div class="my-2 text-center" v-html="resource.description" />
+                    <div class="w-full rounded-md bg-white/75 px-4 py-2 text-center text-sm font-medium text-gray-900 backdrop-blur-sm backdrop-filter">View Resource</div>
                   </div>
                 </div>
                 <div class="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900">
                   <h3>
                     <a href="#">
                       <span aria-hidden="true" class="absolute inset-0" />
-                      {{ product.value }}
+                      {{ resource.name }}
                     </a>
                   </h3>
-                  <p>{{ product.price }}</p>
+                  <p>{{ resource.price }}</p>
                 </div>
-                <p class="mt-1 text-sm text-gray-500">{{ product.category }}</p>
+                <p class="mt-1 text-sm text-gray-500">{{ resource.category }}</p>
               </div>
             </TransitionGroup>
           </div>
@@ -157,32 +157,36 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useSearch } from "@composables/useSearch";
 import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  TransitionChild,
-  TransitionRoot,
-} from '@headlessui/vue'
-import { XMarkIcon } from '@heroicons/vue/24/outline'
-import { ChevronDownIcon, PlusIcon } from '@heroicons/vue/20/solid'
-import { useSearch } from '@composables/useSearch'
+	Dialog,
+	DialogPanel,
+	Disclosure,
+	DisclosureButton,
+	DisclosurePanel,
+	TransitionChild,
+	TransitionRoot,
+} from "@headlessui/vue";
+import { ChevronDownIcon, PlusIcon } from "@heroicons/vue/20/solid";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
+import { ref } from "vue";
 
 const props = defineProps({
-  filters: {
-    type: Array,
-    default: () => [],
-  },
-  items: {
-    type: Array,
-    default: () => [],
-  },
-})
+	resourceFilters: {
+		type: Array,
+		default: () => [],
+	},
+	resources: {
+		type: Array,
+		default: () => [],
+	},
+});
 
-const SEARCH_FUZZINESS = 1
-const { query, filteredItems, filters } = useSearch(props.items, props.filters, SEARCH_FUZZINESS)
-const mobileFiltersOpen = ref(false)
+const SEARCH_FUZZINESS = 1;
+const { query, filteredResources, resourceFilters } = useSearch(
+	props.resources,
+	props.resourceFilters,
+	SEARCH_FUZZINESS,
+);
+const mobileFiltersOpen = ref(false);
 </script>

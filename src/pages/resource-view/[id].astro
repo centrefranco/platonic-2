@@ -5,20 +5,20 @@ import Socials from '@components/Socials.astro'
 import { getDecapCollection } from '@lib/AstroDecap'
 
 export async function getStaticPaths() {
-  const items = await getDecapCollection('items')
+  const resources = await getDecapCollection('resources')
 
-  return Array.isArray(items)
-    ? items.map((item) => ({
-        params: { id: item.id },
-        props: { resource: item },
+  return Array.isArray(resources)
+    ? resources.map((resource) => ({
+        params: { id: resource.id },
+        props: { resource: resource },
       }))
-    : [{ params: { id: items.id }, props: { resource: items } }]
+    : [{ params: { id: resources.id }, props: { resource: resources } }]
 }
 
 const { resource } = Astro.props
 ---
 
-<Layout title={resource.value} debug={{ resource }}>
+<Layout title={resource.name} debug={{ resource }}>
   <main class="bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div
@@ -45,7 +45,7 @@ const { resource } = Astro.props
           <h1
             class="text-3xl font-bold tracking-tight text-gray-900 animate-fade-in-delay-100"
           >
-            {resource?.value}
+            {resource?.name}
           </h1>
 
           <div class="mt-3 animate-fade-in-delay-200">
@@ -91,9 +91,9 @@ const { resource } = Astro.props
   </main>
 
   <Schema
-    course-name={resource?.value}
+    course-name={resource?.name}
     course-code={resource?.code}
-    keywords={resource?.value}
+    keywords={resource?.name}
     image-url={resource?.imageSrc}
     language="fr-CA"
     orgUrl="https://www.apprentissageenligne.org/"

@@ -1,17 +1,17 @@
-import type { Item } from '@composables/useSearch'
-import { getCollection } from 'astro:content'
+import { getCollection } from "astro:content";
+import type { Resource } from "@composables/useSearch";
 
-const preparedItems = (rawItems: any) => {
-  if (Array.isArray(rawItems) && rawItems.length === 1) {
-    return rawItems[0].data as Item
-  }
+const preparedResources = (rawResources: any) => {
+	if (Array.isArray(rawResources) && rawResources.length === 1) {
+		return rawResources[0].data as Resource;
+	}
 
-  return rawItems.map((item: any) => item.data as Item)
-}
+	return rawResources.map((resource: any) => resource.data as Resource);
+};
 
 const getDecapCollection = async (collectionName: string) => {
-  const collection = await getCollection(collectionName)
-  return preparedItems(collection)
-}
+	const collection = await getCollection(collectionName);
+	return preparedResources(collection);
+};
 
-export { getDecapCollection }
+export { getDecapCollection };

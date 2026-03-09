@@ -1,0 +1,22 @@
+id: size
+name: Size
+options:
+  - value: xs
+    label: XS
+    isSelected: false
+  - value: s
+    label: S
+    isSelected: false
+  - value: m
+    label: M
+    isSelected: false
+  - value: l
+    label: L
+    isSelected: false
+  - value: xl
+    label: XL
+    isSelected: false
+  - value: 2xl
+    label: 2XL
+    isSelected: false
+slug: size

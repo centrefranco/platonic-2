@@ -16,7 +16,7 @@ At the core of dynamically generate content is the `getStaticPaths()` function, 
 Fetch the content from decap using the following within said function:
 
 ```javascript
-const items = await getDecapCollection('items')
+const resources = await getDecapCollection('resources')
 ```
 
 For more information on `getStaticPaths()` visit [Astro Routing Reference](https://docs.astro.build/en/reference/routing-reference/#getstaticpaths).

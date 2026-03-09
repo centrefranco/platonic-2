@@ -250,82 +250,315 @@ collections:
                     required: false
 
   - label: 'Resources'
+    label_singular: 'Resource'
     name: 'resources'
     files:
-      - label: 'Items'
-        name: 'items'
-        file: 'src/content/resources/items.yml'
-        create: true
+      - label: 'Lorem Ipsum'
+        name: 'lorem-ipsum'
+        file: 'src/content/resources/lorem-ipsum.yml'
         fields:
-          - label: Items
-            name: items
-            widget: list
+          - { label: 'ID', name: 'id', widget: 'string', required: true }
+          - { label: 'Name', name: 'name', widget: 'string', required: true }
+          - { label: 'Slug', name: 'slug', widget: 'string', required: true, pattern: '^[a-z0-9-]+$' }
+          - { label: 'Description', name: 'description', widget: 'formatted-text' }
+          - label: 'Code'
+            name: 'code'
+            widget: 'select'
+            options:
+              - label: 'Science'
+                value: 'sci'
+              - label: 'Economics'
+                value: 'eco'
+              - label: 'Grammar'
+                value: 'gra'
+          - label: 'Color'
+            name: 'color'
+            widget: 'color'
+            allow_input: true
+          - label: 'Size'
+            name: 'size'
+            widget: 'select'
+            options:
+              - label: 'XS'
+                value: 'xs'
+              - label: 'S'
+                value: 's'
+              - label: 'M'
+                value: 'm'
+              - label: 'L'
+                value: 'l'
+              - label: 'XL'
+                value: 'xl'
+              - label: '2XL'
+                value: '2xl'
+          - { label: 'Href', name: 'href', widget: 'string' }
+          - { label: 'Price', name: 'price', widget: 'string' }
+          - { label: 'Image Source', name: 'imageSrc', widget: 'string' }
+          - { label: 'Image Alt', name: 'imageAlt', widget: 'string' }
+
+      - label: 'Cogito Ergo Sum'
+        name: 'cogito-ergo-sum'
+        file: 'src/content/resources/cogito-ergo-sum.yml'
+        fields:
+          - { label: 'ID', name: 'id', widget: 'string', required: true }
+          - { label: 'Name', name: 'name', widget: 'string', required: true }
+          - { label: 'Slug', name: 'slug', widget: 'string', required: true, pattern: '^[a-z0-9-]+$' }
+          - { label: 'Description', name: 'description', widget: 'formatted-text' }
+          - label: 'Code'
+            name: 'code'
+            widget: 'select'
+            options:
+              - label: 'Science'
+                value: 'sci'
+              - label: 'Economics'
+                value: 'eco'
+              - label: 'Grammar'
+                value: 'gra'
+          - label: 'Color'
+            name: 'color'
+            widget: 'color'
+            allow_input: true
+          - label: 'Size'
+            name: 'size'
+            widget: 'select'
+            options:
+              - label: 'XS'
+                value: 'xs'
+              - label: 'S'
+                value: 's'
+              - label: 'M'
+                value: 'm'
+              - label: 'L'
+                value: 'l'
+              - label: 'XL'
+                value: 'xl'
+              - label: '2XL'
+                value: '2xl'
+          - { label: 'Href', name: 'href', widget: 'string' }
+          - { label: 'Price', name: 'price', widget: 'string' }
+          - { label: 'Image Source', name: 'imageSrc', widget: 'string' }
+          - { label: 'Image Alt', name: 'imageAlt', widget: 'string' }
+
+      - label: 'Gratia Plena'
+        name: 'gratia-plena'
+        file: 'src/content/resources/gratia-plena.yml'
+        fields:
+          - { label: 'ID', name: 'id', widget: 'string', required: true }
+          - { label: 'Name', name: 'name', widget: 'string', required: true }
+          - { label: 'Slug', name: 'slug', widget: 'string', required: true, pattern: '^[a-z0-9-]+$' }
+          - { label: 'Description', name: 'description', widget: 'formatted-text' }
+          - label: 'Code'
+            name: 'code'
+            widget: 'select'
+            options:
+              - label: 'Science'
+                value: 'sci'
+              - label: 'Economics'
+                value: 'eco'
+              - label: 'Grammar'
+                value: 'gra'
+          - label: 'Color'
+            name: 'color'
+            widget: 'color'
+            allow_input: true
+          - label: 'Size'
+            name: 'size'
+            widget: 'select'
+            options:
+              - label: 'XS'
+                value: 'xs'
+              - label: 'S'
+                value: 's'
+              - label: 'M'
+                value: 'm'
+              - label: 'L'
+                value: 'l'
+              - label: 'XL'
+                value: 'xl'
+              - label: '2XL'
+                value: '2xl'
+          - { label: 'Href', name: 'href', widget: 'string' }
+          - { label: 'Price', name: 'price', widget: 'string' }
+          - { label: 'Image Source', name: 'imageSrc', widget: 'string' }
+          - { label: 'Image Alt', name: 'imageAlt', widget: 'string' }
+
+      - label: 'Deus Ex'
+        name: 'deus-ex'
+        file: 'src/content/resources/deus-ex.yml'
+        fields:
+          - { label: 'ID', name: 'id', widget: 'string', required: true }
+          - { label: 'Name', name: 'name', widget: 'string', required: true }
+          - { label: 'Slug', name: 'slug', widget: 'string', required: true, pattern: '^[a-z0-9-]+$' }
+          - { label: 'Description', name: 'description', widget: 'formatted-text' }
+          - label: 'Code'
+            name: 'code'
+            widget: 'select'
+            options:
+              - label: 'Science'
+                value: 'sci'
+              - label: 'Economics'
+                value: 'eco'
+              - label: 'Grammar'
+                value: 'gra'
+          - label: 'Color'
+            name: 'color'
+            widget: 'color'
+            allow_input: true
+          - label: 'Size'
+            name: 'size'
+            widget: 'select'
+            options:
+              - label: 'XS'
+                value: 'xs'
+              - label: 'S'
+                value: 's'
+              - label: 'M'
+                value: 'm'
+              - label: 'L'
+                value: 'l'
+              - label: 'XL'
+                value: 'xl'
+              - label: '2XL'
+                value: '2xl'
+          - { label: 'Href', name: 'href', widget: 'string' }
+          - { label: 'Price', name: 'price', widget: 'string' }
+          - { label: 'Image Source', name: 'imageSrc', widget: 'string' }
+          - { label: 'Image Alt', name: 'imageAlt', widget: 'string' }
+
+      - label: 'Libera Nos A Malo'
+        name: 'libera-nos-a-malo'
+        file: 'src/content/resources/libera-nos-a-malo.yml'
+        fields:
+          - { label: 'ID', name: 'id', widget: 'string', required: true }
+          - { label: 'Name', name: 'name', widget: 'string', required: true }
+          - { label: 'Slug', name: 'slug', widget: 'string', required: true, pattern: '^[a-z0-9-]+$' }
+          - { label: 'Description', name: 'description', widget: 'formatted-text' }
+          - label: 'Code'
+            name: 'code'
+            widget: 'select'
+            options:
+              - label: 'Science'
+                value: 'sci'
+              - label: 'Economics'
+                value: 'eco'
+              - label: 'Grammar'
+                value: 'gra'
+          - label: 'Color'
+            name: 'color'
+            widget: 'color'
+            allow_input: true
+          - label: 'Size'
+            name: 'size'
+            widget: 'select'
+            options:
+              - label: 'XS'
+                value: 'xs'
+              - label: 'S'
+                value: 's'
+              - label: 'M'
+                value: 'm'
+              - label: 'L'
+                value: 'l'
+              - label: 'XL'
+                value: 'xl'
+              - label: '2XL'
+                value: '2xl'
+          - { label: 'Href', name: 'href', widget: 'string' }
+          - { label: 'Price', name: 'price', widget: 'string' }
+          - { label: 'Image Source', name: 'imageSrc', widget: 'string' }
+          - { label: 'Image Alt', name: 'imageAlt', widget: 'string' }
+
+      - label: 'Fructus Ventris'
+        name: 'fructus-ventris'
+        file: 'src/content/resources/fructus-ventris.yml'
+        fields:
+          - { label: 'ID', name: 'id', widget: 'string', required: true }
+          - { label: 'Name', name: 'name', widget: 'string', required: true }
+          - { label: 'Slug', name: 'slug', widget: 'string', required: true, pattern: '^[a-z0-9-]+$' }
+          - { label: 'Description', name: 'description', widget: 'formatted-text' }
+          - label: 'Code'
+            name: 'code'
+            widget: 'select'
+            options:
+              - label: 'Science'
+                value: 'sci'
+              - label: 'Economics'
+                value: 'eco'
+              - label: 'Grammar'
+                value: 'gra'
+          - label: 'Color'
+            name: 'color'
+            widget: 'color'
+            allow_input: true
+          - label: 'Size'
+            name: 'size'
+            widget: 'select'
+            options:
+              - label: 'XS'
+                value: 'xs'
+              - label: 'S'
+                value: 's'
+              - label: 'M'
+                value: 'm'
+              - label: 'L'
+                value: 'l'
+              - label: 'XL'
+                value: 'xl'
+              - label: '2XL'
+                value: '2xl'
+          - { label: 'Href', name: 'href', widget: 'string' }
+          - { label: 'Price', name: 'price', widget: 'string' }
+          - { label: 'Image Source', name: 'imageSrc', widget: 'string' }
+          - { label: 'Image Alt', name: 'imageAlt', widget: 'string' }
+
+  - label: 'Resource Filters'
+    label_singular: 'Resource Filter'
+    name: 'resourceFilters'
+    files:
+      - label: 'Code'
+        name: 'code'
+        file: 'src/content/resourceFilters/code.yml'
+        fields:
+          - { label: 'ID', name: 'id', widget: 'string', required: true }
+          - { label: 'Name', name: 'name', widget: 'string', required: true }
+          - { label: 'Slug', name: 'slug', widget: 'string', required: true, pattern: '^[a-z0-9-]+$' }
+          - label: 'Options'
+            name: 'options'
+            widget: 'list'
             fields:
               - { label: 'Value', name: 'value', widget: 'string' }
-              - { label: 'Description', name: 'description', widget: 'formatted-text' }
-              - { label: 'ID', name: 'id', widget: 'string' }
-              - {
-                  label: 'Code',
-                  name: 'code',
-                  widget: 'select',
-                  options:
-                    [
-                      { label: 'Science', value: 'sci' },
-                      { label: 'Economics', value: 'eco' },
-                      { label: 'Grammar', value: 'gra' },
-                    ],
-                }
-              - {
-                  label: 'Color',
-                  name: 'color',
-                  widget: 'color',
-                  allow_input: true,
-                }
-              - {
-                  label: 'Size',
-                  name: 'size',
-                  widget: 'select',
-                  options:
-                    [
-                      { label: 'XS', value: 'xs' },
-                      { label: 'S', value: 's' },
-                      { label: 'M', value: 'm' },
-                      { label: 'L', value: 'l' },
-                      { label: 'XL', value: 'xl' },
-                      { label: '2XL', value: '2xl' },
-                    ],
-                }
-              - { label: 'Href', name: 'href', widget: 'string' }
-              - { label: 'Price', name: 'price', widget: 'string' }
-              - { label: 'Image Source', name: 'imageSrc', widget: 'string' }
-              - { label: 'Image Alt', name: 'imageAlt', widget: 'string' }
+              - { label: 'Label', name: 'label', widget: 'string' }
+              - { label: 'Is Selected', name: 'isSelected', widget: 'boolean' }
 
-      - label: 'Filters'
-        name: 'filters'
-        file: 'src/content/resources/filters.yml'
-        create: true
+      - label: 'Color'
+        name: 'color'
+        file: 'src/content/resourceFilters/color.yml'
         fields:
-          - label: Filters
-            name: filters
-            widget: list
+          - { label: 'ID', name: 'id', widget: 'string', required: true }
+          - { label: 'Name', name: 'name', widget: 'string', required: true }
+          - { label: 'Slug', name: 'slug', widget: 'string', required: true, pattern: '^[a-z0-9-]+$' }
+          - label: 'Options'
+            name: 'options'
+            widget: 'list'
             fields:
-              - { label: 'ID', name: 'id', widget: 'string' }
-              - { label: 'Name', name: 'name', widget: 'string' }
-              - {
-                  label: 'Options',
-                  name: 'options',
-                  widget: list,
-                  fields:
-                    [
-                      { label: 'Value', name: 'value', widget: 'string' },
-                      { label: 'Label', name: 'label', widget: 'string' },
-                      {
-                        label: 'Is Selected',
-                        name: 'isSelected',
-                        widget: 'boolean',
-                      },
-                    ],
-                }
+              - { label: 'Value', name: 'value', widget: 'string' }
+              - { label: 'Label', name: 'label', widget: 'string' }
+              - { label: 'Is Selected', name: 'isSelected', widget: 'boolean' }
+
+      - label: 'Size'
+        name: 'size'
+        file: 'src/content/resourceFilters/size.yml'
+        fields:
+          - { label: 'ID', name: 'id', widget: 'string', required: true }
+          - { label: 'Name', name: 'name', widget: 'string', required: true }
+          - { label: 'Slug', name: 'slug', widget: 'string', required: true, pattern: '^[a-z0-9-]+$' }
+          - label: 'Options'
+            name: 'options'
+            widget: 'list'
+            fields:
+              - { label: 'Value', name: 'value', widget: 'string' }
+              - { label: 'Label', name: 'label', widget: 'string' }
+              - { label: 'Is Selected', name: 'isSelected', widget: 'boolean' }
 
   - name: 'documents'
     label: 'Documents'

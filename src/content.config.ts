@@ -19,19 +19,46 @@ const documents = defineCollection({
 	}),
 });
 
-const items = defineCollection({
-	loader: decapLoader({ filePath: "src/content/resources/items.yml" }),
+const resources = defineCollection({
+	loader: glob({ pattern: "**/*.yml", base: "./src/content/resources" }),
+	schema: z.object({
+		id: z.string(),
+		name: z.string(),
+		slug: z.string(),
+		description: z.string().optional(),
+		code: z.string().optional(),
+		color: z.string().optional(),
+		size: z.string().optional(),
+		href: z.string().optional(),
+		price: z.string().optional(),
+		imageSrc: z.string().optional(),
+		imageAlt: z.string().optional(),
+	}),
 });
 
-const filters = defineCollection({
-	loader: decapLoader({ filePath: "src/content/resources/filters.yml" }),
+const resourceFilters = defineCollection({
+	loader: glob({ pattern: "**/*.yml", base: "./src/content/resourceFilters" }),
+	schema: z.object({
+		id: z.string(),
+		name: z.string(),
+		slug: z.string(),
+		options: z
+			.array(
+				z.object({
+					value: z.string(),
+					label: z.string(),
+					isSelected: z.boolean().optional(),
+				}),
+			)
+			.optional(),
+	}),
 });
 
 // Expose your defined collections to Astro with the `collections` export
 export const collections = {
 	documents,
-	items,
-	filters,
+	resources,
+	resourceFilters,
 	settings,
 	social,
 };

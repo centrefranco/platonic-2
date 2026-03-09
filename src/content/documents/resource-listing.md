@@ -16,8 +16,8 @@ Resources are made up of two types:
 
 ![Resource Types](/images/docs/resource-types.png)
 
-- **Items**: the resources themselves
-- **Filters**: Used for tagging and/or filtering
+- **Resources**: the resources themselves
+- **Resource Filters**: Used for tagging and/or filtering
 
 ## Editing the Content
 
@@ -28,19 +28,19 @@ You can edit the structure in `/public/admin/config.yml`. The content will appea
 **Important**: If you add new content, you need to make it available to Astro as a collection in `/src/content/content.config.ts`.
 
 ```javascript
-const items = defineCollection({
-  loader: decapLoader({ filePath: 'src/content/resources/items.yml' }),
+const resources = defineCollection({
+  loader: decapLoader({ filePath: 'src/content/resources/resources.yml' }),
 })
 
-const filters = defineCollection({
-  loader: decapLoader({ filePath: 'src/content/resources/filters.yml' }),
+const resourceFilters = defineCollection({
+  loader: decapLoader({ filePath: 'src/content/resources/resourceFilters.yml' }),
 })
 
 // Expose your defined collections to Astro with the `collections` export
 export const collections = {
   documents,
-  items,
-  filters,
+  resources,
+  resourceFilters,
   settings,
   social,
 }
@@ -53,16 +53,16 @@ Once you've created or edited the content, you can include it in your pages like
 ```javascript
 ---
 import { getDecapCollection } from '@lib/AstroDecap';
-const items = await getDecapCollection('items')
+const resources = await getDecapCollection('resources')
 ---
 
 <ul>
-  {items && items.map(item => (
+  {resources && resources.map(resource => (
     <Card
-      name={item.value}
-      courseCode={item.code}
-      description={item.imageAlt}
-      imageUrl={item.imageSrc}
+      name={resource.value}
+      courseCode={resource.code}
+      description={resource.imageAlt}
+      imageUrl={resource.imageSrc}
     />
   ))}
 </ul>

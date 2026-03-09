@@ -1,101 +1,108 @@
-import '@lib/extend-primitives'
-import { reactive, computed, watch, ref } from 'vue'
+import "@lib/extend-primitives";
+import { computed, reactive, ref, watch } from "vue";
 
-export type Item = {
-  id: string
-  value: string
-  [key: string]: any // Whatever other necessary fields
-}
+export type Resource = {
+	id: string;
+	value: string;
+	[key: string]: any; // Whatever other necessary fields
+};
 
-export type Filter = {
-  id: string
-  name: string
-  options: Option[]
-}
+export type ResourceFilter = {
+	id: string;
+	name: string;
+	options: Option[];
+};
 
 export type Option = {
-  value: string
-  label: string
-  isSelected: boolean
-}
+	value: string;
+	label: string;
+	isSelected: boolean;
+};
 
 export const useSearch = (
-  items: Item[],
-  filters: Filter[],
-  queryFuzziness = 1
+	resources: Resource[],
+	resourceFilters: ResourceFilter[],
+	queryFuzziness = 1,
 ) => {
-  const filterUpdateTrigger = ref(0)
-  const state = reactive({
-    query: '',
-    filters: filters,
-    items: items,
-  })
+	const filterUpdateTrigger = ref(0);
+	const state = reactive({
+		query: "",
+		resourceFilters: resourceFilters,
+		resources: resources,
+	});
 
-  const query = computed({
-    get: () => state.query,
-    set: (value: string) => (state.query = value),
-  })
+	const query = computed({
+		get: () => state.query,
+		set: (value: string) => (state.query = value),
+	});
 
-  watch(
-    () => state.filters,
-    () => {
-      filterUpdateTrigger.value++
-    },
-    { deep: true } // Watch nested filter properties i.e., isSelected
-  )
+	watch(
+		() => state.resourceFilters,
+		() => {
+			filterUpdateTrigger.value++;
+		},
+		{ deep: true }, // Watch nested resourceFilter properties i.e., isSelected
+	);
 
-  const filteredItems = computed(() => {
-    const _ = filterUpdateTrigger.value
-    if (!state.query && !hasFilterApplied(state.filters)) return state.items
+	const filteredResources = computed(() => {
+		const _ = filterUpdateTrigger.value;
+		if (!state.query && !hasResourceFilterApplied(state.resourceFilters))
+			return state.resources;
 
-    return state.items.filter((item) =>
-      state.query.length === 0
-        ? isItemMatched(state.filters, item)
-        : state.query.length > 0 && !hasFilterApplied(state.filters)
-          ? isStringMatched(item.value, state.query, queryFuzziness)
-          : isStringMatched(item.value, state.query, queryFuzziness) &&
-            isItemMatched(state.filters, item)
-    )
-  })
+		return state.resources.filter((resource) =>
+			state.query.length === 0
+				? isResourceMatched(state.resourceFilters, resource)
+				: state.query.length > 0 &&
+						!hasResourceFilterApplied(state.resourceFilters)
+					? isStringMatched(resource.name, state.query, queryFuzziness)
+					: isStringMatched(resource.name, state.query, queryFuzziness) &&
+						isResourceMatched(state.resourceFilters, resource),
+		);
+	});
 
-  return {
-    query,
-    filteredItems,
-    filters: state.filters,
-  }
-}
+	return {
+		query,
+		filteredResources,
+		resourceFilters: state.resourceFilters,
+	};
+};
 
-const hasFilterApplied = (filters: Filter[]) => {
-  return filters.some((filter) =>
-    filter.options.some((option) => option.isSelected)
-  )
-}
+const hasResourceFilterApplied = (resourceFilters: ResourceFilter[]) => {
+	return resourceFilters.some((resourceFilter) =>
+		resourceFilter.options.some((option) => option.isSelected),
+	);
+};
 
-const isItemMatched = (filters: Filter[], item: Item) => {
-  if (!filters || !item) return false
+const isResourceMatched = (
+	resourceFilters: ResourceFilter[],
+	resource: Resource,
+) => {
+	if (!resourceFilters || !resource) return false;
 
-  for (const filter of filters) {
-    const isMatched = filter.options
-      .filter((option) => option.isSelected)
-      .some((option) => isStringMatched(option.value, item?.[filter.id]))
+	for (const resourceFilter of resourceFilters) {
+		const isMatched = resourceFilter.options
+			.filter((option) => option.isSelected)
+			.some((option) =>
+				isStringMatched(option.value, resource?.[resourceFilter.id]),
+			);
 
-    if (isMatched) return true
-  }
+		if (isMatched) return true;
+	}
 
-  return false
-}
+	return false;
+};
 
 const isStringMatched = (a: string, b: string, fuzziness = 0) => {
-  if (!a || !b) return false
+	if (!a || !b) return false;
 
-  return removeDiacritics(a)
-    .trim()
-    .toLowerCase()
-    .includesFuzzy(removeDiacritics(b).trim().toLowerCase(), fuzziness)
-}
+	return removeDiacritics(a)
+		.trim()
+		.toLowerCase()
+		.includesFuzzy(removeDiacritics(b).trim().toLowerCase(), fuzziness);
+};
 
 const removeDiacritics = (str: string) => {
-  return typeof str === 'string'
-    ? str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    : ''
-}
+	return typeof str === "string"
+		? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+		: "";
+};

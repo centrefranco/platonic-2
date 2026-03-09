@@ -3,10 +3,10 @@ import { getDecapCollection } from '@lib/AstroDecap'
 import Layout from '@layouts/Layout.astro'
 import Card from '@components/Card.astro'
 
-const items = await getDecapCollection('items')
+const resources = await getDecapCollection('resources')
 ---
 
-<Layout title="Resource Listing Example" debug={items}>
+<Layout title="Resource Listing Example" debug={resources}>
   <div class="relative isolate pt-14">
     <div
       class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -31,7 +31,7 @@ const items = await getDecapCollection('items')
           >
             Les référentiels curriculaires, élaborés en synergie avec les
             acteurs éducatifs, garantissent une progression spiralaire des
-            savoirs, tout en valorisant l’autonomie épistémologique de l’élève
+            savoirs, tout en valorisant l'autonomie épistémologique de l'élève
             dans un écosystème apprenant.
           </p>
         </div>
@@ -46,13 +46,13 @@ const items = await getDecapCollection('items')
         class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8"
       >
         {
-          items &&
-            items.map((item) => (
+          resources &&
+            resources.map((resource) => (
               <Card
-                name={item.value}
-                courseCode={item.code}
-                description={item.imageAlt}
-                imageUrl={item.imageSrc}
+                name={resource.name}
+                courseCode={resource.code}
+                description={resource.imageAlt}
+                imageUrl={resource.imageSrc}
               />
             ))
         }

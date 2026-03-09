@@ -1,0 +1,17 @@
+size: l
+color: brown
+price: $49
+imageSrc: >-
+  https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-05-related-product-01.jpg
+href: '#'
+code: sci
+imageAlt: >-
+  Payment application dashboard screenshot with transaction table, financial
+  highlights, and main clients on colorful purple background.
+name: Deus Ex
+id: 9f8e7d6c-5b4a-3c2d-1e0f-9a8b7c6d5e4f
+description: >-
+  Lorem ips<strong>u</strong>m&nbsp;<strong>cogito</strong>&nbsp;<em>ergo
+  sum</em>&nbsp;tu&nbsp;<em>ne</em>&nbsp;cede
+  malis&nbsp;<sup>gratia</sup>&nbsp;plena
+slug: deus-ex

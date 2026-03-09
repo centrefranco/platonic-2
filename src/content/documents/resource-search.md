@@ -17,8 +17,8 @@ Resources are made up of two types:
 
 ![Resource Types](/images/docs/resource-types.png)
 
-- **Items**: the resources themselves
-- **Filters**: Used for tagging and/or filtering. This is a requirement when using the `useSearch` composable.
+- **Resources**: the resources themselves
+- **Resource Filters**: Used for tagging and/or filtering. This is a requirement when using the `useSearch` composable.
 
 ## Editing the Content
 
@@ -27,19 +27,19 @@ You can edit the structure in `/public/admin/config.yml`. The content will appea
 **Important**: If you add new content, you need to make it available to Astro as a collection in `/src/content/content.config.ts`.
 
 ```javascript
-const items = defineCollection({
-  loader: decapLoader({ filePath: 'src/content/resources/items.yml' }),
+const resources = defineCollection({
+  loader: decapLoader({ filePath: 'src/content/resources/resources.yml' }),
 })
 
-const filters = defineCollection({
-  loader: decapLoader({ filePath: 'src/content/resources/filters.yml' }),
+const resourceFilters = defineCollection({
+  loader: decapLoader({ filePath: 'src/content/resources/resourceFilters.yml' }),
 })
 
 // Expose your defined collections to Astro with the `collections` export
 export const collections = {
   documents,
-  items,
-  filters,
+  resources,
+  resourceFilters,
   settings,
   social,
 }
@@ -57,12 +57,12 @@ import Layout from '@layouts/Layout.astro'
 import Search from '@components/Search.vue' // Vue component that does the heavy lifting
 import { getDecapCollection } from '@lib/AstroDecap' // Use the AstroDecap lib to import content
 
-const filters = await getDecapCollection('filters')
-const items = await getDecapCollection('items')
+const resourceFilters = await getDecapCollection('resourceFilters')
+const resources = await getDecapCollection('resources')
 ---
 
-<Layout title="Resource Search" debug={{ items, filters }}>
-  <Search client:only="vue" items={items} filters={filters} />
+<Layout title="Resource Search" debug={{ resources, resourceFilters }}>
+  <Search client:only="vue" resources={resources} resourceFilters={resourceFilters} />
 </Layout>
 ```
 
@@ -76,32 +76,32 @@ From there, you can either roll out your own solution or use the `useSearch` com
 import { useSearch } from '@composables/useSearch'
 
 const props = defineProps({
-  filters: {
+  resourceFilters: {
     type: Array,
     default: () => [],
   },
-  items: {
+  resources: {
     type: Array,
     default: () => [],
   },
 })
 
 const SEARCH_FUZZINESS = 1
-const { query, filteredItems, filters } = useSearch(
-  props.items,
-  props.filters,
+const { query, filteredResources, resourceFilters } = useSearch(
+  props.resources,
+  props.resourceFilters,
   SEARCH_FUZZINESS
 )
 </script>
 
 <template>
   <ul>
-    <li v-for="product in filteredItems">
-      {{ product.value }} - ${{ product.price }}
+    <li v-for="resource in filteredResources">
+      {{ resource.value }} - ${{ resource.price }}
     </li>
   </ul>
 
-  <div v-for="section in filters">
+  <div v-for="section in resourceFilters">
     <fieldset>
       <legend>{{ section.name }}</legend>
       <div v-for="(option, optionIdx) in section.options">
